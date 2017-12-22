@@ -1,6 +1,7 @@
+import { BackButtonService } from './../../services/backButton.service';
+import { TabsPage } from './../tabs/tabs';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TabsPage } from "../tabs/tabs";
+import { IonicPage, NavController, NavParams, ModalController, Platform } from 'ionic-angular';
 
 /**
  * Generated class for the LoginPage page.
@@ -15,7 +16,15 @@ import { TabsPage } from "../tabs/tabs";
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController
+    , public navParams: NavParams
+    ,public modalCtrl:ModalController
+    ,private platform:Platform
+    ,private backButtonService:BackButtonService
+  ) {
+    this.platform.ready().then(()=>{
+      this.backButtonService.registerBackButtonAction(null);
+    });
   }
 
   ionViewDidLoad() {
@@ -30,7 +39,9 @@ export class LoginPage {
     } else {
       let userinfo: string = '用户名：' + username.value + '密码：' + password.value;
       alert(userinfo);
-      this.navCtrl.push(TabsPage);
+      //this.navCtrl.push(TabsPage);
+      let modal=this.modalCtrl.create(TabsPage);
+      modal.present();
     }
   }
 
