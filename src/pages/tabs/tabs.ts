@@ -27,7 +27,7 @@ export class TabsPage {
       },
     ];
 
-    platform.ready().then(()=>{
+    this.platform.ready().then(()=>{
       this.backButtonService.registerBackButtonAction(this.tabRef);
     });
   }
